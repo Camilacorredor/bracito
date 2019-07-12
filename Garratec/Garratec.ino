@@ -18,31 +18,7 @@ void GirarCentro (void);
 
 void setup() {
 
- motorBase.attach(pinBase);
- motorDerecho.attach(pinDerecho);
- motorIzquierdo.attach(pinIzquierdo);
- motorMano.attach(pinMano);
 
- 
- motorBase.write(0);
- delay(2000);
- motorDerecho.write(0);
- delay(2000);
- motorMano.write(60);
- delay(2000);
- motorBase.write(90);
- delay(2000);
- motorDerecho.write(180);
- delay(2000);
- motorIzquierdo.write(30);
- delay(2000);
- motorBase.write(180);
- delay(2000);
- motorDerecho.write(90);
- delay(2000);
- motorIzquierdo.write(180);
- delay(2000);
- motorMano.write(180);
 
 
 }
