@@ -1,17 +1,12 @@
-#include <Servo.h>
+#include <Servo.h> //Comienzo de trabajo en comandos 
 #include <SoftwareSerial.h>
-
-#define pinBase 12 
-#define pinDerecho 11 
-#define pinIzquierdo 10 
-#define pinMano 9 
-
-
-Servo motorBase;
-Servo motorDerecho;
-Servo motorIzquierdo;
-Servo motorMano;
-void Abrir (void);
+SoftwareSerial BT (2,3);
+ 
+ Servo motorBase;
+ Servo motorDerecho;
+ Servo motorIzquierdo;
+ Servo motorMano;
+ void Abrir (void);
 void Agarrar (void);
 void GirarCentro(void);
 void Descender (void);
@@ -20,39 +15,23 @@ void Subir (void);
 void Ascender (void);
 void GirarLadoIzquierdo(void);
 
-
-SoftwareSerial BT(3,2);
-
-void setup() 
-
-{
-
-motorBase.attach(pinBase);
-motorDerecho.attach(pinDerecho); 
-motorIzquierdo.attach(pinIzquierdo); 
-motorMano.attach(pinMano); 
-
-Serial.begin(9600);
-BT.begin(9600); 
-motorMano.write(5);
-motorBase.write(90); 
-
-}
-
-int t;
-
-char s[6];
-void loop() 
-
-{
-  
-if(Serial.available()>0&&Serial.available()<=6)
-
+ void setup ()
  {
-  
-  BT.readBytes(s,6);
-  BT.println(s);
-  switch(s[0])
+  BT.begin (9600);
+  /*Serial.begin (9600);*/
+  motorBase.attach (12);
+  motorDerecho.attach (11);
+  motorIzquierdo.attach (10);
+  motorMano.attach (9);
+ }
+ int m,j,c;
+ char s[4];
+ 
+void loop (){
+  if (BT.available ()>0&& BT.available ()<4)
+   BT.readBytes (s,4);
+   { 
+    switch (s[0])
   {
     case'p':
     Abrir ();
@@ -69,6 +48,7 @@ if(Serial.available()>0&&Serial.available()<=6)
     Subir();
     Ascender();
     delay(4000);
+    break;
 
     case'o':
     Abrir();
@@ -87,6 +67,7 @@ if(Serial.available()>0&&Serial.available()<=6)
     Subir();
     Ascender();
     delay(4000);
+    break;
 
     case'u':
     Abrir();
@@ -106,37 +87,32 @@ if(Serial.available()>0&&Serial.available()<=6)
     Subir();
     Ascender();
     delay(4000);
-    
-    case'b':
-    t=((s[1]-48)*100)+((s[2]-48)*10)+(s[3]-48);
-    
-    motorBase.write(t);
-    Serial.println(t);
     break;
     
-    case'd':
-    t=((s[1]-48)*100)+((s[2]-48)*10)+(s[3]-48);
     
-    motorDerecho.write(t);
-    Serial.println(t);
-    break;
-    
-    case'i':
-    t=((s[1]-48)*100)+((s[2]-48)*10)+(s[3]-48);
-    
-    motorIzquierdo.write(t);
-    Serial.println(t);
-    break;
+   case 'b':
+   m= ((s[1]-48)*100)+((s[2]-48)*10)+((s[3]-48));
+   motorBase.write (m);
+   break; 
+   
+   case 'g':
+   m= ((s[1]-48)*100)+((s[2]-48)*10)+((s[3]-48));
+   motorMano.write (m);
+   break;
+   
+   case 'd':
+   m= ((s[1]-48)*100)+((s[2]-48)*10)+((s[3]-48));
+   motorDerecho.write (m);
+   break;
+   
+   case 'i':
+   m= ((s[1]-48)*100)+((s[2]-48)*10)+((s[3]-48));
+   motorIzquierdo.write (m);
+   break;
 
-    case'g':
-    t=((s[1]-48)*100)+((s[2]-48)*10)+(s[3]-48);
-    
-    motorMano.write(t);
-    Serial.println(t);
-    break;
-    
+   
   }
- }
+}
 }
 void Abrir (void)
 {
@@ -145,12 +121,12 @@ void Abrir (void)
 }
 void Agarrar (void)
 {
-  motorMano.write(30);
+  motorMano.write(110);
   delay(1000);
 }
 void GirarCentro (void)
 {
-  motorBase.write(105);
+  motorBase.write(90);
   delay(1000);
 }
 void Descender (void)
